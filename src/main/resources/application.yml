@@ -1,0 +1,45 @@
+server:
+  port: 8081
+spring:
+  application:
+    name: spring-boot-study
+  datasource:
+    name: druid-dev
+    url: jdbc:mysql://127.0.0.1/video_marketed?useUnicode=true&characterEncoding=utf8
+    username: root
+    password: root
+    type: com.alibaba.druid.pool.DruidDataSource
+    driverClassName: com.mysql.jdbc.Driver
+    filters: stat
+    maxActive: 20
+    initialSize: 1
+    maxWait: 60000
+    minIdle: 1
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: select 'x'
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    poolPreparedStatements: true
+    maxOpenPreparedStatements: 20
+
+mybatis:
+  configuration:
+     mapUnderscoreToCamelCase: true
+     useGeneratedKeys: true
+     logImpl: org.apache.ibatis.logging.stdout.StdOutImpl
+  mapperLocations: classpath:mapper/*.xml
+  typeAliasesPackage: com.spring.study.entity
+  typeHandlersPackage: com.spring.study.typeHandler
+
+crawl:
+ push-task:
+   start-time: 0 0 3 * * ?
+   publish-in: 2592000000
+
+dataCache:
+  config:
+    video-tag-list:
+      expireAfterWrite: 30
+      maximumSize: 100
