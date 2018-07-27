@@ -19,9 +19,9 @@ public class CorsFilters {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowCredentials(true);
-        config.addAllowedOrigin("*");
-        config.addAllowedHeader("*");
-        config.addAllowedMethod("*");
+        config.addAllowedOrigin("127.0.0.1");
+        config.addAllowedHeader("POST, GET, OPTIONS");
+        config.addAllowedMethod("Content-Type, Authorization, Accept, Token");
         source.registerCorsConfiguration("/**", config);
         FilterRegistrationBean bean = new FilterRegistrationBean(new CorsFilter(source));
         bean.setOrder(0);

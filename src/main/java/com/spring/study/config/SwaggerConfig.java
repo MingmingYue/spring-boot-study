@@ -47,7 +47,7 @@ public class SwaggerConfig {
         return new ApiInfoBuilder()
                 .title("项目文档")
                 .termsOfServiceUrl("http://127.0.0.1:8081")
-                .contact(new Contact("视频营销工具", "http://127.0.0.1:8081", "156873783@qq.com"))
+                .contact(new Contact("study", "http://127.0.0.1:8081", "156873783@qq.com"))
                 .version("1.1")
                 .build();
     }
