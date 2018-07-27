@@ -37,7 +37,7 @@ public class SwaggerConfig {
                 .groupName("study")
                 .apiInfo(apiInfo())
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("http://127.0.0.1:8081"))
+                .apis(RequestHandlerSelectors.basePackage("com.spring.study.controller"))
                 .paths(PathSelectors.any())
                 .build()
                 .globalOperationParameters(pars);

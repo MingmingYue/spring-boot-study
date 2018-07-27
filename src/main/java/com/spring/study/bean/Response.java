@@ -2,11 +2,16 @@ package com.spring.study.bean;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * @author: ZhouMingming
  * @data: Create on 2018/7/26.
  */
+@Getter
+@Setter
 @ApiModel(description = "返回信息")
 public class Response<T> {
 
@@ -28,7 +33,7 @@ public class Response<T> {
     }
 
     public static <T> Response<T> success(int code, String message, T data) {
-        return new Response<>(code, message, data);
+        return new Response<T>(code, message, data);
     }
 
     public static <T> Response success(int code, T data) {
