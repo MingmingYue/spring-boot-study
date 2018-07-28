@@ -38,9 +38,11 @@ public class SecurityAspect {
     public Object execute(ProceedingJoinPoint pjp) throws Throwable {
         long start = TimeUtils.getCurr();
         MethodSignature methodSignature = (MethodSignature) pjp.getSignature();
-        Method method = methodSignature.getMethod();log.info("SecurityAspect : execute method is " + pjp.getTarget().getClass().getSimpleName());
-        if (method.isAnnotationPresent(IgnoreSecurity.class) || "ApiResourceController".equals(pjp.getTarget().getClass().getSimpleName())
-                || "BasicErrorController".equals(pjp.getTarget().getClass().getSimpleName())) {
+        Method method = methodSignature.getMethod();
+        log.info("SecurityAspect : execute method is " + pjp.getTarget().getClass().getSimpleName());
+        if (method.isAnnotationPresent(IgnoreSecurity.class)
+                || pjp.getTarget().getClass().getSimpleName().contains("ApiResourceController")
+                || pjp.getTarget().getClass().getSimpleName().contains("BasicErrorController")) {
             return pjp.proceed();
         }
         String token = WebContext.getRequest().getHeader(tokenName);

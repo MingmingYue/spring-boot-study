@@ -2,6 +2,7 @@ package com.spring.study.common;
 
 import com.spring.study.bean.CheckResult;
 import com.spring.study.exception.ErrorStatusCode;
+import com.spring.study.web.WebContext;
 import io.jsonwebtoken.*;
 import lombok.extern.slf4j.Slf4j;
 import org.bouncycastle.util.encoders.Base64;

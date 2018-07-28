@@ -4,6 +4,7 @@ import com.spring.study.bean.Response;
 import com.spring.study.entity.User;
 import com.spring.study.security.IgnoreSecurity;
 import com.spring.study.service.UserService;
+import com.spring.study.vo.UserVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -40,5 +41,12 @@ public class UserController {
     public Response<Boolean> register(@RequestParam("mobile") String mobile, @RequestParam("password") String password) {
         boolean success = userService.register(mobile, password);
         return Response.success(HttpStatus.OK.value(), HttpStatus.OK.getReasonPhrase(), success);
+    }
+
+    @ApiOperation(value = "获取用户", notes = "获取用户", httpMethod = "GET")
+    @ApiResponse(code = 200, message = "User")
+    @RequestMapping(value = "/register", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public Response<UserVo> getUser() {
+        return Response.success(HttpStatus.OK.value(), HttpStatus.OK.getReasonPhrase(), User.builder().mobile("123456").email("123456").build().toVo());
     }
 }
