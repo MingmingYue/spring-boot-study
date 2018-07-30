@@ -19,7 +19,7 @@ public class CorsFilters {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowCredentials(true);
-        config.addAllowedOrigin("127.0.0.1");
+        config.addAllowedOrigin("127.0.0.1");// 设置访问源地址
         config.addAllowedHeader("POST, GET, OPTIONS");
         config.addAllowedMethod("Content-Type, Authorization, Accept, Token");
         source.registerCorsConfiguration("/**", config);
