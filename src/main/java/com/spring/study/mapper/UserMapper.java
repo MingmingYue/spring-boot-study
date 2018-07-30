@@ -1,5 +1,6 @@
 package com.spring.study.mapper;
 
+import com.spring.study.entity.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -10,5 +11,5 @@ import org.apache.ibatis.annotations.Param;
 @Mapper
 public interface UserMapper {
 
-    boolean register(@Param("mobile") String mobile, @Param("password") String password) throws Exception;
+    boolean register(User user);
 }

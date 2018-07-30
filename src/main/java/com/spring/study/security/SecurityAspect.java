@@ -41,14 +41,13 @@ public class SecurityAspect {
         Method method = methodSignature.getMethod();
         log.info("SecurityAspect : execute method is " + pjp.getTarget().getClass().getSimpleName());
         if (method.isAnnotationPresent(IgnoreSecurity.class)
-                || pjp.getTarget().getClass().getSimpleName().contains("ApiResourceController")
-                || pjp.getTarget().getClass().getSimpleName().contains("BasicErrorController")) {
+                || pjp.getTarget().getClass().getSimpleName().equals("ApiResourceController")
+                || pjp.getTarget().getClass().getSimpleName().equals("BasicErrorController")) {
             return pjp.proceed();
         }
         String token = WebContext.getRequest().getHeader(tokenName);
         if (!tokenManager.checkToken(token)) {
-            String message = String.format("token [%s] is invalid", token);
-            log.error(message);
+            log.error(String.format("token [%s] is invalid", token));
             return Response.failure(ErrorStatusCode.TOKEN_ERROR.value(), ErrorStatusCode.TOKEN_ERROR.reasonPhrase());
         }
         Object result = pjp.proceed();

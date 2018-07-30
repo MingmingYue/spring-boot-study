@@ -1,6 +1,7 @@
 package com.spring.study.common;
 
-import org.joda.time.DateTime;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 
 /**
  * @author: ZhouMingming
@@ -8,15 +9,7 @@ import org.joda.time.DateTime;
  */
 public class TimeUtils {
 
-    private final static String FORMAT_ORDER_TIME = "yyMMddHHmmssSSS";
-
     public static long getCurr() {
-        DateTime dateTime = new DateTime();
-        return dateTime.getMillis();
-    }
-
-    public static String getFormatOrderTime() {
-        DateTime dateTime = new DateTime();
-        return dateTime.toString(FORMAT_ORDER_TIME);
+        return LocalDateTime.now().toInstant(ZoneOffset.of("+8")).toEpochMilli();
     }
 }

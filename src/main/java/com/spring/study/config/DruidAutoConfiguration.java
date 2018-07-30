@@ -33,7 +33,6 @@ public class DruidAutoConfiguration implements EnvironmentAware {
 
     @Bean(destroyMethod = "close", initMethod = "init")
     public DataSource writeDataSource() {
-        System.out.println(myUrl);
         DruidDataSource dataSource = new DruidDataSource();
         dataSource.setUrl(propertyResolver.getProperty("url"));
         dataSource.setUsername(propertyResolver.getProperty("username"));
