@@ -9,6 +9,8 @@ import com.spring.study.web.WebContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 /**
  * @author: ZhouMingming
  * @data: Create on 2018/7/27.
@@ -42,6 +44,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getUser() {
-        return userMapper.getUserById(WebContext.userHolder.get().getId());
+        return Optional.ofNullable(userMapper.getUserById(
+                WebContext.userHolder.get().getId())).orElseThrow(() -> new IllegalAccessError("用户不存在"));
     }
 }
