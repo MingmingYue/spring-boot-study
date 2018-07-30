@@ -3,6 +3,7 @@ package com.spring.study.controller;
 import com.spring.study.bean.Response;
 import com.spring.study.entity.User;
 import com.spring.study.security.IgnoreSecurity;
+import com.spring.study.security.TokenManager;
 import com.spring.study.service.UserService;
 import com.spring.study.vo.UserVo;
 import io.swagger.annotations.Api;
@@ -28,10 +29,12 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
 
     private final UserService userService;
+    private final TokenManager tokenManager;
 
     @Autowired
-    public UserController(UserService userService) {
+    public UserController(UserService userService, TokenManager tokenManager) {
         this.userService = userService;
+        this.tokenManager = tokenManager;
     }
 
     @IgnoreSecurity
@@ -43,10 +46,21 @@ public class UserController {
         return Response.success(HttpStatus.OK.value(), HttpStatus.OK.getReasonPhrase(), success);
     }
 
+    @IgnoreSecurity
+    @ApiOperation(value = "用户登录", notes = "用户登录", httpMethod = "POST")
+    @ApiResponse(code = 200, message = "Success")
+    @RequestMapping(value = "/login", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public Response<UserVo> login(@RequestParam("mobile") String mobile, @RequestParam("password") String password) {
+        UserVo user = userService.login(mobile, password).toVo();
+        user.setToken(tokenManager.createToken(mobile, user.getId()));
+        return Response.success(HttpStatus.OK.value(), HttpStatus.OK.getReasonPhrase(), user);
+    }
+
     @ApiOperation(value = "获取用户", notes = "获取用户", httpMethod = "GET")
     @ApiResponse(code = 200, message = "User")
-    @RequestMapping(value = "/register", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = "/getUser", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public Response<UserVo> getUser() {
-        return Response.success(HttpStatus.OK.value(), HttpStatus.OK.getReasonPhrase(), User.builder().mobile("123456").email("123456").build().toVo());
+        User user = userService.getUser();
+        return Response.success(HttpStatus.OK.value(), HttpStatus.OK.getReasonPhrase(), user.toVo());
     }
 }

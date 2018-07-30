@@ -10,7 +10,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 /**
- * 用户测试类
  *
  * @author: ZhouMingming
  * @data: Create on 2018/7/30.

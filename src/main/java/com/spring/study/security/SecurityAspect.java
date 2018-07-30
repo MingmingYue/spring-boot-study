@@ -28,7 +28,6 @@ public class SecurityAspect {
 
     @Resource
     private TokenManager tokenManager;
-    private String tokenName = DEFAULT_TOKEN_NAME;
 
     @Pointcut("@annotation(org.springframework.web.bind.annotation.RequestMapping)")
     public void excudeService() {
@@ -39,19 +38,21 @@ public class SecurityAspect {
         long start = TimeUtils.getCurr();
         MethodSignature methodSignature = (MethodSignature) pjp.getSignature();
         Method method = methodSignature.getMethod();
-        log.info("SecurityAspect : execute method is " + pjp.getTarget().getClass().getSimpleName());
         if (method.isAnnotationPresent(IgnoreSecurity.class)
                 || pjp.getTarget().getClass().getSimpleName().equals("ApiResourceController")
                 || pjp.getTarget().getClass().getSimpleName().equals("BasicErrorController")) {
             return pjp.proceed();
         }
-        String token = WebContext.getRequest().getHeader(tokenName);
+
+        String token = WebContext.getRequest().getHeader(DEFAULT_TOKEN_NAME);
         if (!tokenManager.checkToken(token)) {
             log.error(String.format("token [%s] is invalid", token));
             return Response.failure(ErrorStatusCode.TOKEN_ERROR.value(), ErrorStatusCode.TOKEN_ERROR.reasonPhrase());
         }
+
         Object result = pjp.proceed();
-        log.info("[***className: " + pjp.getTarget().getClass().getSimpleName() + " ,wayName: " + pjp.getSignature().getName() + " ,timeConsumed: " + (TimeUtils.getCurr() - start) + " ms ***]");
+        log.info("[***className: " + pjp.getTarget().getClass().getSimpleName() + " ,wayName: " + pjp.getSignature().getName()
+                + " ,timeConsumed: " + (TimeUtils.getCurr() - start) + " ms ***]");
         return result;
     }
 }

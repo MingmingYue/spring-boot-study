@@ -1,5 +1,8 @@
 package com.spring.study.web;
 
+
+import com.spring.study.entity.Permission;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -11,6 +14,7 @@ public class WebContext {
 
     private static ThreadLocal<HttpServletRequest> requestHolder = new ThreadLocal<>();
     private static ThreadLocal<HttpServletResponse> responseHolder = new ThreadLocal<>();
+    public static ThreadLocal<Permission> userHolder = new ThreadLocal<>();
 
     public static void init(HttpServletRequest request, HttpServletResponse response) {
         requestHolder.set(request);
@@ -20,6 +24,7 @@ public class WebContext {
     public static void destroy() {
         requestHolder.remove();
         responseHolder.remove();
+        userHolder.remove();
     }
 
     public static HttpServletRequest getRequest() {

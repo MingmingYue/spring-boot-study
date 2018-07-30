@@ -1,6 +1,8 @@
 package com.spring.study.common;
 
 import com.spring.study.bean.CheckResult;
+import com.spring.study.entity.Permission;
+import com.spring.study.entity.User;
 import com.spring.study.exception.ErrorStatusCode;
 import com.spring.study.web.WebContext;
 import io.jsonwebtoken.*;
@@ -10,6 +12,7 @@ import org.bouncycastle.util.encoders.Base64;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 import java.util.Date;
+
 /**
  * @author: ZhouMingming
  * @data: Create on 2018/7/7.
@@ -43,6 +46,7 @@ public class JwtUtils {
             claims = parseJWT(jwtStr);
             checkResult.setSuccess(true);
             checkResult.setClaims(claims);
+            WebContext.userHolder.set(Permission.builder().id(Integer.valueOf(claims.getId())).mobile(claims.getSubject()).build());
         } catch (ExpiredJwtException e) {
             checkResult.setSuccess(false);
             log.error("JwtUtils : validateJWT ExpiredJwtException" + e.getMessage());
