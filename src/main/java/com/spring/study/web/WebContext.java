@@ -14,6 +14,7 @@ public class WebContext {
 
     private static ThreadLocal<HttpServletRequest> requestHolder = new ThreadLocal<>();
     private static ThreadLocal<HttpServletResponse> responseHolder = new ThreadLocal<>();
+    // 记录每个token的请求对象
     public static ThreadLocal<Permission> userHolder = new ThreadLocal<>();
 
     public static void init(HttpServletRequest request, HttpServletResponse response) {

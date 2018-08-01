@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
+ * 多个拦截器的运行顺序按照定义顺序执行
+ *
  * @author: ZhouMingming
  * @data: Create on 2018/8/1.
  */

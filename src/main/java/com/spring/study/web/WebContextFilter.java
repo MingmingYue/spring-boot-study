@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
+ * 多个过滤器可以使用order注解来配置执行顺序
+ *
  * @author: ZhouMingming
  * @data: Create on 2018/6/30.
  */
