@@ -39,8 +39,8 @@ public class SecurityAspect {
         MethodSignature methodSignature = (MethodSignature) pjp.getSignature();
         Method method = methodSignature.getMethod();
         if (method.isAnnotationPresent(IgnoreSecurity.class)
-                || pjp.getTarget().getClass().getSimpleName().equals("ApiResourceController")
-                || pjp.getTarget().getClass().getSimpleName().equals("BasicErrorController")) {
+                || "ApiResourceController".equals(pjp.getTarget().getClass().getSimpleName())
+                || "BasicErrorController".equals(pjp.getTarget().getClass().getSimpleName())) {
             return pjp.proceed();
         }
 

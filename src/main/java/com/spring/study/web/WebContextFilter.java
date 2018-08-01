@@ -1,6 +1,7 @@
 package com.spring.study.web;
 
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
@@ -12,18 +13,14 @@ import java.io.IOException;
  * @data: Create on 2018/6/30.
  */
 @Configuration
-public class WebContextFilter implements Filter {
+public class WebContextFilter extends OncePerRequestFilter {
 
     private final static String OPTIONS = "OPTIONS";
 
     @Override
-    public void init(FilterConfig filterConfig) throws ServletException {
-    }
-
-    @Override
-    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-        HttpServletRequest request = (HttpServletRequest) servletRequest;
-        HttpServletResponse response = (HttpServletResponse) servletResponse;
+    protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, FilterChain filterChain) throws ServletException, IOException {
+        HttpServletRequest request = httpServletRequest;
+        HttpServletResponse response = httpServletResponse;
 
         if (request.getMethod().equalsIgnoreCase(OPTIONS)) {
             return;
