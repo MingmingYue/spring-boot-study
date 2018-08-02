@@ -8,3 +8,6 @@
 
 # 数据库
 - 数据库：数据库目前采用的是mysql
+
+# 项目描述
+- 整个项目使用的是Spring boot 1.5.4 接口校验使用的是iptoken 接口文档使用的swagger2 数据库采用的是mysql
