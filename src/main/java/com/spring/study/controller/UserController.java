@@ -11,10 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author: ZhouMingming
@@ -41,7 +38,7 @@ public class UserController {
             @ApiImplicitParam(name = "mobile", value = "注册账号"),
             @ApiImplicitParam(name = "password", value = "密码")})
     @ApiResponse(code = 200, message = "OK")
-    @RequestMapping(value = "/register", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @PostMapping(value = "/register", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public Response<Boolean> register(@RequestParam("mobile") String mobile, @RequestParam("password") String password) {
         boolean success = userService.register(mobile, password);
         return Response.success(HttpStatus.OK.value(), HttpStatus.OK.getReasonPhrase(), success);
@@ -53,7 +50,7 @@ public class UserController {
             @ApiImplicitParam(name = "mobile", value = "账号"),
             @ApiImplicitParam(name = "password", value = "密码")})
     @ApiResponse(code = 200, message = "OK")
-    @RequestMapping(value = "/login", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @PostMapping(value = "/login", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public Response<UserVo> login(@RequestParam("mobile") String mobile, @RequestParam("password") String password) {
         UserVo user = userService.login(mobile, password).toVo();
         user.setToken(tokenManager.createToken(mobile, user.getId()));
@@ -62,7 +59,7 @@ public class UserController {
 
     @ApiOperation(value = "获取用户", notes = "获取用户", httpMethod = "GET")
     @ApiResponse(code = 200, message = "OK")
-    @RequestMapping(value = "/getUser", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @GetMapping(value = "/getUser", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public Response<UserVo> getUser() {
         User user = userService.getUser();
         return Response.success(HttpStatus.OK.value(), HttpStatus.OK.getReasonPhrase(), user.toVo());

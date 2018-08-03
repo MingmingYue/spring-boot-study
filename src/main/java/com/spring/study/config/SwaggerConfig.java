@@ -25,12 +25,15 @@ import java.util.List;
 @EnableSwagger2
 public class SwaggerConfig {
 
+    // 设置一个默认的token
+    private static final String TOKEN = "";
+
     @Bean
     public Docket videoMarketApi() {
         // 添加swagger 请求头中的token参数
         ParameterBuilder tokenPar = new ParameterBuilder();
         List<Parameter> pars = new ArrayList<>();
-        tokenPar.name("Token").description("令牌").modelRef(new ModelRef("string")).parameterType("header").required(false).build();
+        tokenPar.name("Token").description("令牌").defaultValue(TOKEN).modelRef(new ModelRef("string")).parameterType("header").required(false).build();
         pars.add(tokenPar.build());
 
         return new Docket(DocumentationType.SWAGGER_2)
@@ -38,7 +41,7 @@ public class SwaggerConfig {
                 .apiInfo(apiInfo())
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("com.spring.study.controller"))
-                .paths(PathSelectors.any())
+                .paths(PathSelectors.ant("/**"))
                 .build()
                 .globalOperationParameters(pars);
     }

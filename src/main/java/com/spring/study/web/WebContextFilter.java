@@ -1,5 +1,6 @@
 package com.spring.study.web;
 
+import com.spring.study.security.SecurityAspect;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -24,7 +25,7 @@ public class WebContextFilter extends OncePerRequestFilter {
         HttpServletRequest request = httpServletRequest;
         HttpServletResponse response = httpServletResponse;
 
-        if (request.getMethod().equalsIgnoreCase(OPTIONS)) {
+        if (request.getMethod().equalsIgnoreCase(OPTIONS) && WebContext.getRequest().getHeader(SecurityAspect.DEFAULT_TOKEN_NAME) == null) {
             return;
         }
 
