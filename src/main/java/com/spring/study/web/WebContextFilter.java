@@ -25,7 +25,7 @@ public class WebContextFilter extends OncePerRequestFilter {
         HttpServletRequest request = httpServletRequest;
         HttpServletResponse response = httpServletResponse;
 
-        if (request.getMethod().equalsIgnoreCase(OPTIONS) && WebContext.getRequest().getHeader(SecurityAspect.DEFAULT_TOKEN_NAME) == null) {
+        if (request.getMethod().equalsIgnoreCase(OPTIONS)) {
             return;
         }
 

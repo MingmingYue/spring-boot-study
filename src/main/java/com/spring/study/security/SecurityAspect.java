@@ -24,7 +24,7 @@ import java.lang.reflect.Method;
 @Component("SecurityAspect")
 public class SecurityAspect {
 
-    public static final String DEFAULT_TOKEN_NAME = "Token";
+    private static final String DEFAULT_TOKEN_NAME = "Token";
 
     @Resource
     private TokenManager tokenManager;
