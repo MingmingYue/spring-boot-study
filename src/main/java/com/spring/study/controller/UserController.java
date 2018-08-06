@@ -24,9 +24,6 @@ import java.util.Optional;
 public class UserController extends BaseController {
 
     @ApiOperation(value = "用户注册", notes = "用户注册", httpMethod = "POST")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "username", value = "注册账号"),
-            @ApiImplicitParam(name = "password", value = "密码")})
     @ApiResponse(code = 200, message = "OK")
     @PostMapping(value = "/register", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public Response<Boolean> register(@RequestParam("username") String username, @RequestParam("password") String password) {
