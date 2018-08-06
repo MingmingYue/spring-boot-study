@@ -16,4 +16,6 @@ public interface UserMapper {
     User login(@Param("mobile") String mobile, @Param("password") String password);
 
     User getUserById(@Param("id") int id);
+
+    User getUserByName(@Param("username") String username);
 }

@@ -15,11 +15,11 @@ public class AppInterceptors extends WebMvcConfigurerAdapter {
     /**
      * 添加拦截器
      */
-    @Override
-    public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new MyInterceptor()).addPathPatterns("/**");
-        super.addInterceptors(registry);
-    }
+//    @Override
+//    public void addInterceptors(InterceptorRegistry registry) {
+//        registry.addInterceptor(new MyInterceptor()).addPathPatterns("/**");
+//        super.addInterceptors(registry);
+//    }
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {

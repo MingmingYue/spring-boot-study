@@ -1,11 +1,9 @@
 package com.spring.study.service.impl;
 
 import com.spring.study.common.TimeUtils;
-import com.spring.study.entity.Permission;
 import com.spring.study.entity.User;
 import com.spring.study.mapper.UserMapper;
 import com.spring.study.service.UserService;
-import com.spring.study.web.WebContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,10 +27,10 @@ public class UserServiceImpl implements UserService {
     public boolean register(String mobile, String password) {
         long curr = TimeUtils.getCurr();
         User user = User.builder()
-                .mobile(mobile)
+//                .mobile(mobile)
                 .password(password)
-                .createAt(curr)
-                .updateAt(curr)
+//                .createAt(curr)
+//                .updateAt(curr)
                 .build();
         return userMapper.register(user);
     }
@@ -44,7 +42,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getUser() {
-        return Optional.ofNullable(userMapper.getUserById(
-                WebContext.userHolder.get().getId())).orElseThrow(() -> new IllegalAccessError("用户不存在"));
+        return Optional.ofNullable(userMapper.getUserById(7)).orElseThrow(() -> new IllegalAccessError("用户不存在"));
+    }
+
+    @Override
+    public User getUserByName(String username) {
+        return userMapper.getUserByName(username);
     }
 }

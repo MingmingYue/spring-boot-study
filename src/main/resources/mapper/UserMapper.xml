@@ -26,4 +26,10 @@
         operator_user
         WHERE id = #{id};
     </select>
+
+    <select id="getUserByName" resultType="User">
+        SELECT *FROM
+        operator_user
+        WHERE username = #{username};
+    </select>
 </mapper>

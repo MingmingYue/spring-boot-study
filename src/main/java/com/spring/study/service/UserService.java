@@ -33,4 +33,13 @@ public interface UserService {
      * @return
      */
     User getUser();
+
+
+    /**
+     * 获取用户
+     *
+     * @param username
+     * @return
+     */
+    User getUserByName(String username);
 }

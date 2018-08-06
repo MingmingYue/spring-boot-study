@@ -1,4 +1,4 @@
-package com.spring.study.exception;
+package com.spring.study.enums;
 
 /**
  * @author: ZhouMingming

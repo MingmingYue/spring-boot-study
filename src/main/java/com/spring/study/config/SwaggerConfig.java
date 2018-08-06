@@ -1,11 +1,10 @@
 package com.spring.study.config;
 
+import com.spring.study.common.JwtConstant;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import springfox.documentation.builders.ApiInfoBuilder;
-import springfox.documentation.builders.ParameterBuilder;
-import springfox.documentation.builders.PathSelectors;
-import springfox.documentation.builders.RequestHandlerSelectors;
+import org.springframework.web.bind.annotation.RequestMethod;
+import springfox.documentation.builders.*;
 import springfox.documentation.schema.ModelRef;
 import springfox.documentation.service.ApiInfo;
 import springfox.documentation.service.Contact;
@@ -17,6 +16,8 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.google.common.collect.Lists.newArrayList;
+
 /**
  * @author: ZhouMingming
  * @data: Create on 2018/7/27.
@@ -25,15 +26,12 @@ import java.util.List;
 @EnableSwagger2
 public class SwaggerConfig {
 
-    // 设置一个默认的token
-    private static final String TOKEN = "";
-
     @Bean
     public Docket videoMarketApi() {
         // 添加swagger 请求头中的token参数
         ParameterBuilder tokenPar = new ParameterBuilder();
         List<Parameter> pars = new ArrayList<>();
-        tokenPar.name("Token").description("令牌").defaultValue(TOKEN).modelRef(new ModelRef("string")).parameterType("header").required(false).build();
+        tokenPar.name(JwtConstant.TOKEN).description("令牌").defaultValue(JwtConstant.BEARER).modelRef(new ModelRef("string")).parameterType("header").required(false).build();
         pars.add(tokenPar.build());
 
         return new Docket(DocumentationType.SWAGGER_2)
@@ -41,7 +39,7 @@ public class SwaggerConfig {
                 .apiInfo(apiInfo())
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("com.spring.study.controller"))
-                .paths(PathSelectors.ant("/**"))
+                .paths(PathSelectors.any())
                 .build()
                 .globalOperationParameters(pars);
     }
