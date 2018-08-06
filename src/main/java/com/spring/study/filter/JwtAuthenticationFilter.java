@@ -63,7 +63,9 @@ public class JwtAuthenticationFilter extends BasicAuthenticationFilter {
                 for (int i = 0; i < split.length; i++) {
                     authorities.add(new GrantedAuthorityImpl(split[i]));
                 }
-                return new UsernamePasswordAuthenticationToken(new StringTokenizer(user).nextToken("-"), null, authorities);
+                UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(user, null, authorities);
+                authenticationToken.setDetails(new StringTokenizer(user).nextToken("-"));
+                return authenticationToken;
             }
         } catch (ExpiredJwtException e) {
             logger.error("Token已过期: {} " + e);

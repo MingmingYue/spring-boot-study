@@ -28,7 +28,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
      * 需要放行的url
      */
     private static final String[] AUTH_WHITELIST = {
-//            "/user/login",
             "/user/register",
 
             "/v2/api-docs",
