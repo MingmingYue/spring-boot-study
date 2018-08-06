@@ -26,12 +26,14 @@ import static com.google.common.collect.Lists.newArrayList;
 @EnableSwagger2
 public class SwaggerConfig {
 
+    private static final String DEFAULT_TOKEN = "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxNTg5MjE5NzM5Ny1bUk9MRV9BRE1JTiwgQVVUSF9XUklURV0iLCJleHAiOjE1MzQyNTUzMDB9.ANjBD85_R2OY5Qs-hC8YmYBjGuPP62dos4xn16V9CKo";
+
     @Bean
     public Docket videoMarketApi() {
         // 添加swagger 请求头中的token参数
         ParameterBuilder tokenPar = new ParameterBuilder();
         List<Parameter> pars = new ArrayList<>();
-        tokenPar.name(JwtConstant.TOKEN).description("令牌").defaultValue(JwtConstant.BEARER).modelRef(new ModelRef("string")).parameterType("header").required(false).build();
+        tokenPar.name(JwtConstant.TOKEN).description("令牌").defaultValue(DEFAULT_TOKEN).modelRef(new ModelRef("string")).parameterType("header").required(false).build();
         pars.add(tokenPar.build());
 
         return new Docket(DocumentationType.SWAGGER_2)

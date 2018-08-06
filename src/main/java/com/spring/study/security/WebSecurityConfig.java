@@ -1,5 +1,6 @@
 package com.spring.study.security;
 
+import com.spring.study.filter.CorsFilter;
 import com.spring.study.security.impl.CustomAuthenticationProvider;
 import com.spring.study.filter.JwtAuthenticationFilter;
 import com.spring.study.filter.JwtLoginFilter;
@@ -12,6 +13,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.access.channel.ChannelProcessingFilter;
 
 /**
  * @author: ZhouMingming
@@ -71,6 +73,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .logout()
                 .logoutUrl("/user/logout")
                 .logoutSuccessUrl("/user/login")
-                .permitAll(); // 设置注销成功后的跳转到登录页面
+                .permitAll() // 设置注销成功后的跳转到登录页面
+                .disable()
+                .addFilterBefore(new CorsFilter(), ChannelProcessingFilter.class);
     }
 }

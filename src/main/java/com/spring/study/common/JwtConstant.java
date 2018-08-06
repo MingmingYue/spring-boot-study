@@ -11,13 +11,13 @@ public final class JwtConstant {
     /**
      * 请求携带参数
      */
-    public static final String BEARER = "Bearer";
+    public static final String BEARER = "Bearer ";
     /**
      * 秘钥
      */
-    public static final String JWT_SECRET = "spring-security-@Jwt!&Secret^#";
+    public static final String JWT_SECRET = "d4624c36b6795d1d99dcf0547af5443d";
     /**
      * 有效期
      */
-    public static final long JWT_TTL = 2 * 60 * 60 * 1000;
+    public static final long JWT_TTL = 200 * 60 * 60 * 1000;
 }

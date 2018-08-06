@@ -19,23 +19,23 @@ public class User {
 
     @JsonIgnoreProperties
     private int id;
-//    private String mobile;
+    private String mobile;
     private String password;
     private String username;
-//    private String email;
-//    private String desc;
-//    private long createAt;
-//    private long updateAt;
+    private String email;
+    private String desc;
+    private long createAt;
+    private long updateAt;
 
     public UserVo toVo() {
         return UserVo.builder()
-//                .id(this.id)
-//                .mobile(this.mobile)
-//                .username(this.username == null ? "" : this.username)
-//                .email(this.email == null ? "" : this.email)
-//                .desc(this.desc == null ? "" : this.desc)
-//                .createAt(this.createAt)
-//                .updateAt(this.updateAt)
+                .id(this.id)
+                .mobile(this.mobile)
+                .username(this.username == null ? "" : this.username)
+                .email(this.email == null ? "" : this.email)
+                .desc(this.desc == null ? "" : this.desc)
+                .createAt(this.createAt)
+                .updateAt(this.updateAt)
                 .build();
     }
 }

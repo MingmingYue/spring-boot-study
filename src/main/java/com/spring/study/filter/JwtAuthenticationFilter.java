@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.StringTokenizer;
 
 /**
  * @author: ZhouMingming
@@ -62,7 +63,7 @@ public class JwtAuthenticationFilter extends BasicAuthenticationFilter {
                 for (int i = 0; i < split.length; i++) {
                     authorities.add(new GrantedAuthorityImpl(split[i]));
                 }
-                return new UsernamePasswordAuthenticationToken(user, null, authorities);
+                return new UsernamePasswordAuthenticationToken(new StringTokenizer(user).nextToken("-"), null, authorities);
             }
         } catch (ExpiredJwtException e) {
             logger.error("Token已过期: {} " + e);

@@ -7,9 +7,11 @@ import io.swagger.annotations.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.util.Optional;
 
 /**
  * @author: ZhouMingming
@@ -32,21 +34,12 @@ public class UserController extends BaseController {
         return Response.success(HttpStatus.OK.value(), HttpStatus.OK.getReasonPhrase(), success);
     }
 
-//    @ApiOperation(value = "用户登录", notes = "用户登录", httpMethod = "POST")
-//    @ApiResponse(code = 200, message = "OK")
-//    @PostMapping(value = "/login", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-//    public Response<UserVo> login(@RequestParam(value = "username", required = false) String username, @RequestParam(value = "password", required = false) String password) {
-//        UserVo user = userService.login(username, password).toVo();
-//        List<String> authentication = getAuthentication();
-//        authentication.stream().forEach(s -> System.out.println(s));
-//        return Response.success(HttpStatus.OK.value(), HttpStatus.OK.getReasonPhrase(), user);
-//    }
-
     @ApiOperation(value = "获取用户", notes = "获取用户", httpMethod = "GET")
     @ApiResponse(code = 200, message = "OK")
     @GetMapping(value = "/getUser", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public Response<UserVo> getUser() {
-        User user = userService.getUser();
-        return Response.success(HttpStatus.OK.value(), HttpStatus.OK.getReasonPhrase(), user.toVo());
+        Optional<Authentication> authentication = Optional.of(SecurityContextHolder.getContext().getAuthentication());
+        String username = (String) authentication.get().getPrincipal();
+        return Response.success(HttpStatus.OK.value(), HttpStatus.OK.getReasonPhrase(), User.builder().username(username).build().toVo());
     }
 }
