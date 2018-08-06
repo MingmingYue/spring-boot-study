@@ -26,7 +26,7 @@ import static com.google.common.collect.Lists.newArrayList;
 @EnableSwagger2
 public class SwaggerConfig {
 
-    private static final String DEFAULT_TOKEN = "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxNTg5MjE5NzM5Ny1bUk9MRV9BRE1JTiwgQVVUSF9XUklURV0iLCJleHAiOjE1MzQyNTUzMDB9.ANjBD85_R2OY5Qs-hC8YmYBjGuPP62dos4xn16V9CKo";
+    private static final String DEFAULT_TOKEN = "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxNTg5MjE5NzM5Ny1bUk9MRV9BRE1JTiwgQVVUSF9XUklURV0iLCJleHAiOjE1MzQyNzIyOTB9.h1csdIF_OPFANIWr-0GLhB0qBp3k1Vl6ha67gaKGoeg";
 
     @Bean
     public Docket videoMarketApi() {

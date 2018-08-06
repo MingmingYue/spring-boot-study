@@ -5,7 +5,7 @@ spring:
     name: spring-boot-study
   datasource:
     name: druid-dev
-    url: jdbc:mysql://127.0.0.1/video_marketed?useUnicode=true&characterEncoding=utf8
+    url: jdbc:mysql://127.0.0.1/study?useUnicode=true&characterEncoding=utf8
     username: root
     password: root
     type: com.alibaba.druid.pool.DruidDataSource

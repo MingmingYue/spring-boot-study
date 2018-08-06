@@ -17,7 +17,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class User {
 
-    @JsonIgnoreProperties
     private int id;
     private String mobile;
     private String password;

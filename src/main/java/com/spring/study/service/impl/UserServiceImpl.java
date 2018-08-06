@@ -6,8 +6,7 @@ import com.spring.study.mapper.UserMapper;
 import com.spring.study.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
+import org.springframework.util.DigestUtils;
 
 /**
  * @author: ZhouMingming
@@ -24,25 +23,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean register(String mobile, String password) {
+    public boolean register(String username, String password) {
         long curr = TimeUtils.getCurr();
         User user = User.builder()
-//                .mobile(mobile)
-                .password(password)
-//                .createAt(curr)
-//                .updateAt(curr)
+                .username(username)
+                .password(DigestUtils.md5DigestAsHex(password.getBytes()))
+                .createAt(curr)
+                .updateAt(curr)
                 .build();
         return userMapper.register(user);
-    }
-
-    @Override
-    public User login(String mobile, String password) {
-        return userMapper.login(mobile, password);
-    }
-
-    @Override
-    public User getUser() {
-        return Optional.ofNullable(userMapper.getUserById(7)).orElseThrow(() -> new IllegalAccessError("用户不存在"));
     }
 
     @Override

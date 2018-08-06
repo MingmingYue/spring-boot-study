@@ -36,7 +36,7 @@ public class UserController extends BaseController {
     @GetMapping(value = "/getUser", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public Response<UserVo> getUser() {
         Optional<Authentication> authentication = Optional.of(SecurityContextHolder.getContext().getAuthentication());
-        String username = (String) authentication.get().getDetails();
-        return Response.success(HttpStatus.OK.value(), HttpStatus.OK.getReasonPhrase(), User.builder().username(username).build().toVo());
+        User user = userService.getUserByName((String) authentication.get().getDetails());
+        return Response.success(HttpStatus.OK.value(), HttpStatus.OK.getReasonPhrase(), user.toVo());
     }
 }

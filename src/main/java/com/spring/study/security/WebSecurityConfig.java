@@ -1,6 +1,5 @@
 package com.spring.study.security;
 
-import com.spring.study.filter.CorsFilter;
 import com.spring.study.security.impl.CustomAuthenticationProvider;
 import com.spring.study.filter.JwtAuthenticationFilter;
 import com.spring.study.filter.JwtLoginFilter;
@@ -13,7 +12,6 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.web.access.channel.ChannelProcessingFilter;
 
 /**
  * @author: ZhouMingming
@@ -61,8 +59,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
      */
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
-        httpSecurity.cors().and().csrf().disable()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
+        httpSecurity
+                .cors().and() // 跨域支持
+                .csrf().disable()
+                // jwt 不需要session 所以不需要创建会话
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
                 .authorizeRequests()
                 .antMatchers(AUTH_WHITELIST).permitAll()
                 .anyRequest().authenticated() // 所有请求需要身份验证
@@ -74,6 +76,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .logoutSuccessUrl("/user/login")
                 .permitAll() // 设置注销成功后的跳转到登录页面
                 .disable()
-                .addFilterBefore(new CorsFilter(), ChannelProcessingFilter.class);
+                .headers().cacheControl(); // 禁用页面缓存
     }
 }

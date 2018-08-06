@@ -39,7 +39,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
         UserDetails userDetails = userDetailsService.loadUserByUsername(name);
         if (null != userDetails) {
             String encodePassword = DigestUtils.md5DigestAsHex(password.getBytes());
-            if (!userDetails.getPassword().equals(encodePassword)) {
+            if (userDetails.getPassword().equals(encodePassword)) {
                 // 设置权限和角色
                 ArrayList<GrantedAuthority> authorities = new ArrayList<>(10);
                 authorities.add(new GrantedAuthorityImpl("ROLE_ADMIN"));

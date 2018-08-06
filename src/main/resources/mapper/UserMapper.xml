@@ -3,7 +3,7 @@
 <mapper namespace="com.spring.study.mapper.UserMapper">
 
     <insert id="register" parameterType="User" keyProperty="id">
-        INSERT INTO operator_user
+        INSERT INTO user
            (mobile, password,
            username, email,
            `desc`, create_at,
@@ -15,21 +15,9 @@
            #{updateAt});
     </insert>
 
-    <select id="login" resultType="User">
-        SELECT *FROM operator_user
-        WHERE mobile = #{mobile}
-        AND password = #{password};
-    </select>
-
-    <select id="getUserById" resultType="User">
-        SELECT *FROM
-        operator_user
-        WHERE id = #{id};
-    </select>
-
     <select id="getUserByName" resultType="User">
         SELECT *FROM
-        operator_user
+        user
         WHERE username = #{username};
     </select>
 </mapper>

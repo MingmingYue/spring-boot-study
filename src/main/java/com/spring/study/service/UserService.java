@@ -12,28 +12,11 @@ public interface UserService {
     /**
      * 用户注册
      *
-     * @param mobile
+     * @param username
      * @param password
      * @return
      */
-    boolean register(String mobile, String password);
-
-    /**
-     * 用户登录
-     *
-     * @param mobile
-     * @param password
-     * @return
-     */
-    User login(String mobile, String password);
-
-    /**
-     * 获取用户
-     *
-     * @return
-     */
-    User getUser();
-
+    boolean register(String username, String password);
 
     /**
      * 获取用户
