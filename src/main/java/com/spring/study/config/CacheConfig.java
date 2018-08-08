@@ -16,14 +16,14 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 
 /**
- * 缓存
+ * spring 缓存
  *
  * @author: ZhouMingming
  * @data: Create on 2018/7/30.
  */
 @Configuration
 @EnableCaching
-@ConfigurationProperties(prefix = "dataCache")
+@ConfigurationProperties(prefix = "data-cache")
 @EnableConfigurationProperties
 public class CacheConfig {
 

@@ -4,41 +4,37 @@ spring:
   application:
     name: spring-boot-study
   datasource:
-    name: druid-dev
-    url: jdbc:mysql://127.0.0.1/study?useUnicode=true&characterEncoding=utf8
-    username: root
-    password: root
-    type: com.alibaba.druid.pool.DruidDataSource
-    driverClassName: com.mysql.jdbc.Driver
-    filters: stat
-    maxActive: 20
-    initialSize: 1
-    maxWait: 60000
-    minIdle: 1
-    timeBetweenEvictionRunsMillis: 60000
-    minEvictableIdleTimeMillis: 300000
-    validationQuery: select 'x'
-    testWhileIdle: true
-    testOnBorrow: false
-    testOnReturn: false
-    poolPreparedStatements: true
-    maxOpenPreparedStatements: 20
+    druid:
+      name: druid-dev
+      url: jdbc:mysql://127.0.0.1/study?useUnicode=true&characterEncoding=utf8
+      username: root
+      password: root
+      driver-class-name: com.mysql.jdbc.Driver
+      filters: stat
+      max-active: 20
+      initial-size: 1
+      max-wait: 60000
+      min-idle: 1
+      time-between-eviction-runs-millis: 60000
+      min-evictable-idle-time-millis: 300000
+      validation-query: SELECT 1 FROM DUAL
+      test-on-borrow: false
+      test-on-return: false
+      test-while-idle: true
+      pool-prepared-statements: true
+      max-pool-prepared-statement-per-connection-size: 20
 
-mybatis:
+mybatis-plus:
   configuration:
-     mapUnderscoreToCamelCase: true
-     useGeneratedKeys: true
-     logImpl: org.apache.ibatis.logging.stdout.StdOutImpl
-  mapperLocations: classpath:mapper/*.xml
+    map-underscore-to-camel-case: true
+    useGeneratedKeys: true
+    cache-enabled: false
+    logImpl: org.apache.ibatis.logging.stdout.StdOutImpl
+  mapper-locations: classpath:mapper/*.xml
   typeAliasesPackage: com.spring.study.entity
   typeHandlersPackage: com.spring.study.typeHandler
 
-crawl:
- push-task:
-   start-time: 0 0 3 * * ?
-   publish-in: 2592000000
-
-dataCache:
+data-cache:
   config:
     video-tag-list:
       expireAfterWrite: 30
