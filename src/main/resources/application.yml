@@ -23,6 +23,12 @@ spring:
       test-while-idle: true
       pool-prepared-statements: true
       max-pool-prepared-statement-per-connection-size: 20
+  redis:
+    host: 127.0.0.1
+    password:
+    database: 0
+    port: 6379
+    timeout: 3000
 
 mybatis-plus:
   configuration:
