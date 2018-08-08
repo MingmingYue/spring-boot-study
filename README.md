@@ -1,6 +1,5 @@
 # 技术栈
 - Spring Boot 2.0.1
-- mybatis 1.3.2
 - security 2.0.1
 - Jwt 3.3.0
 - swagger 2.7.0
