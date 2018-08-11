@@ -11,7 +11,19 @@ import org.apache.ibatis.annotations.Param;
 @Mapper
 public interface UserMapper {
 
+    /**
+     * 注册用户数
+     *
+     * @param user
+     * @return
+     */
     boolean register(User user);
 
+    /**
+     * 查找用户
+     *
+     * @param username
+     * @return
+     */
     User getUserByName(@Param("username") String username);
 }

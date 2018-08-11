@@ -6,7 +6,13 @@ package com.spring.study.enums;
  */
 public enum ErrorStatusCode {
 
+    /**
+     * 服务器错误
+     */
     SYSTEM_ERROR(1005, "服务器错误"),
+    /**
+     * 权限不足请重新登录
+     */
     TOKEN_ERROR(1006, "权限不足请重新登录");
 
     private final int value;
