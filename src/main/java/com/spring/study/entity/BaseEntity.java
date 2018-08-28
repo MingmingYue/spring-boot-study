@@ -3,6 +3,7 @@ package com.spring.study.entity;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.spring.study.util.SnowFlakeUtil;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -14,6 +15,7 @@ import java.util.Date;
  * @author: ZhouMingming
  * @data: Create on 2018/8/27.
  */
+@Data
 public abstract class BaseEntity {
 
     @Id

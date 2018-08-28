@@ -49,7 +49,7 @@ public class JwtLoginFilter extends UsernamePasswordAuthenticationFilter {
                     new UsernamePasswordAuthenticationToken(
                             user.getUsername(),
                             user.getPassword(),
-                            new ArrayList<>(10))
+                            new ArrayList<>())
             );
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -64,7 +64,7 @@ public class JwtLoginFilter extends UsernamePasswordAuthenticationFilter {
         String token;
         try {
             Collection<? extends GrantedAuthority> authorities = authResult.getAuthorities();
-            List roleList = new ArrayList<>(10);
+            List roleList = new ArrayList<>();
             for (GrantedAuthority grantedAuthority : authorities) {
                 roleList.add(grantedAuthority.getAuthority());
             }

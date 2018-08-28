@@ -20,9 +20,4 @@ public class UserServiceImplTest {
 
     @Autowired
     private UserService userService;
-
-    @Test
-    public void register() throws Exception {
-        Assert.assertTrue(userService.register("12321213", "123123213"));
-    }
 }

@@ -2,22 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.spring.study.mapper.UserMapper">
 
-    <insert id="register" parameterType="User" keyProperty="id">
-        INSERT INTO user
-           (mobile, password,
-           username, email,
-           `desc`, create_at,
-           update_at)
-        VALUE
-           (#{mobile},#{password},
-           #{username},#{email},
-           #{desc},#{createAt},
-           #{updateAt});
-    </insert>
-
     <select id="getUserByName" resultType="User">
-        SELECT *FROM
-        user
+        SELECT *FROM t_user
         WHERE username = #{username};
     </select>
 </mapper>

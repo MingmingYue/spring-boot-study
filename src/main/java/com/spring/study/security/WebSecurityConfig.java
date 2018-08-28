@@ -1,5 +1,6 @@
 package com.spring.study.security;
 
+import com.spring.study.config.IgnoredUrlsProperties;
 import com.spring.study.security.impl.CustomAuthenticationProvider;
 import com.spring.study.filter.JwtAuthenticationFilter;
 import com.spring.study.filter.JwtLoginFilter;
@@ -23,30 +24,17 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    /**
-     * 需要放行的url
-     */
-    private static final String[] AUTH_WHITELIST = {
-            "/user/register",
-
-            "/v2/api-docs",
-            "/swagger-resources",
-            "/swagger-resources/**",
-            "/configuration/ui",
-            "/configuration/security",
-            "/swagger-ui.html",
-            "/webjars/**",
-
-            "/druid1/**"
-    };
 
     private UserDetailsService userDetailsService;
     private BCryptPasswordEncoder bCryptPasswordEncoder;
+    private IgnoredUrlsProperties ignoredUrlsProperties;
 
-    public WebSecurityConfig( UserDetailsService userDetailsService,
-                             BCryptPasswordEncoder bCryptPasswordEncoder) {
+    public WebSecurityConfig(UserDetailsService userDetailsService,
+                             BCryptPasswordEncoder bCryptPasswordEncoder,
+                             IgnoredUrlsProperties ignoredUrlsProperties) {
         this.userDetailsService = userDetailsService;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+        this.ignoredUrlsProperties = ignoredUrlsProperties;
     }
 
     /**
@@ -62,6 +50,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
      */
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
+        System.out.println(ignoredUrlsProperties.getUrls().toString());
         httpSecurity
                 .cors().and() // 跨域支持
                 .csrf().disable()
@@ -69,7 +58,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
-                .antMatchers(AUTH_WHITELIST).permitAll()
+                .antMatchers(ignoredUrlsProperties.getUrls().toString()).permitAll()
                 .anyRequest().authenticated() // 所有请求需要身份验证
                 .and()
                 .addFilter(new JwtLoginFilter(authenticationManager()))

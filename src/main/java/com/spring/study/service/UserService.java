@@ -10,15 +10,6 @@ import com.spring.study.entity.User;
 public interface UserService {
 
     /**
-     * 用户注册
-     *
-     * @param username
-     * @param password
-     * @return
-     */
-    boolean register(String username, String password);
-
-    /**
      * 获取用户
      *
      * @param username

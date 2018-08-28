@@ -41,7 +41,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
             String encodePassword = DigestUtils.md5DigestAsHex(password.getBytes());
             if (userDetails.getPassword().equals(encodePassword)) {
                 // 设置权限和角色
-                ArrayList<GrantedAuthority> authorities = new ArrayList<>(10);
+                ArrayList<GrantedAuthority> authorities = new ArrayList<>();
                 authorities.add(new GrantedAuthorityImpl("ROLE_ADMIN"));
                 authorities.add(new GrantedAuthorityImpl("AUTH_WRITE"));
                 return new UsernamePasswordAuthenticationToken(name, password, authorities);
