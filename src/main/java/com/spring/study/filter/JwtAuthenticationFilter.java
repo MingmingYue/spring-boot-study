@@ -1,15 +1,18 @@
 package com.spring.study.filter;
 
+import cn.hutool.core.util.StrUtil;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.spring.study.common.JwtConstant;
 import com.spring.study.exception.TokenException;
-import com.spring.study.security.impl.GrantedAuthorityImpl;
 import io.jsonwebtoken.*;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
 import javax.servlet.FilterChain;
@@ -18,7 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.StringTokenizer;
+import java.util.List;
 
 /**
  * @author: ZhouMingming
@@ -47,41 +50,41 @@ public class JwtAuthenticationFilter extends BasicAuthenticationFilter {
 
     private UsernamePasswordAuthenticationToken getAuthentication(HttpServletRequest request) {
         String token = request.getHeader(JwtConstant.TOKEN);
-        if (token == null || token.isEmpty()) {
-            throw new TokenException("Token为空");
-        }
-        String user;
-        try {
-            user = Jwts.parser()
-                    .setSigningKey(JwtConstant.JWT_SECRET)
-                    .parseClaimsJws(token.replace(JwtConstant.BEARER, ""))
-                    .getBody()
-                    .getSubject();
-            if (user != null) {
-                String[] split = user.split("-")[1].split(",");
-                ArrayList<GrantedAuthority> authorities = new ArrayList<>();
-                for (int i = 0; i < split.length; i++) {
-                    authorities.add(new GrantedAuthorityImpl(split[i]));
+        if (StrUtil.isNotBlank(token)) {
+            try {
+                Claims claims = Jwts.parser()
+                        .setSigningKey(JwtConstant.JWT_SECRET)
+                        .parseClaimsJws(token.replace(JwtConstant.BEARER, ""))
+                        .getBody();
+
+                String username = claims.getSubject();
+                if (StrUtil.isNotBlank(username)) {
+                    List<GrantedAuthority> authorities = new ArrayList<>();
+                    String authority = claims.get(JwtConstant.AUTHORITIES).toString();
+
+                    if (StrUtil.isNotBlank(authority)) {
+                        List<String> list = new Gson().fromJson(authority, new TypeToken<List<String>>() {}.getType());
+                        list.stream().forEach(s -> authorities.add(new SimpleGrantedAuthority(s)));
+                    }
+                    User principal = new User(username, "", authorities);
+                    return new UsernamePasswordAuthenticationToken(principal, null, authorities);
                 }
-                UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(user, null, authorities);
-                authenticationToken.setDetails(new StringTokenizer(user).nextToken("-"));
-                return authenticationToken;
+            } catch (ExpiredJwtException e) {
+                logger.error("Token已过期: {} " + e);
+                throw new TokenException("Token已过期");
+            } catch (UnsupportedJwtException e) {
+                logger.error("Token格式错误: {} " + e);
+                throw new TokenException("Token格式错误");
+            } catch (MalformedJwtException e) {
+                logger.error("Token没有被正确构造: {} " + e);
+                throw new TokenException("Token没有被正确构造");
+            } catch (SignatureException e) {
+                logger.error("签名失败: {} " + e);
+                throw new TokenException("签名失败");
+            } catch (IllegalArgumentException e) {
+                logger.error("非法参数异常: {} " + e);
+                throw new TokenException("非法参数异常");
             }
-        } catch (ExpiredJwtException e) {
-            logger.error("Token已过期: {} " + e);
-            throw new TokenException("Token已过期");
-        } catch (UnsupportedJwtException e) {
-            logger.error("Token格式错误: {} " + e);
-            throw new TokenException("Token格式错误");
-        } catch (MalformedJwtException e) {
-            logger.error("Token没有被正确构造: {} " + e);
-            throw new TokenException("Token没有被正确构造");
-        } catch (SignatureException e) {
-            logger.error("签名失败: {} " + e);
-            throw new TokenException("签名失败");
-        } catch (IllegalArgumentException e) {
-            logger.error("非法参数异常: {} " + e);
-            throw new TokenException("非法参数异常");
         }
         return null;
     }

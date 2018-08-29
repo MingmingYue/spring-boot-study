@@ -20,4 +20,8 @@ public final class JwtConstant {
      * 有效期
      */
     public static final Long JWT_TTL = 2 * 60 * 60 * 1000L;
+    /**
+     * 权限参数头
+     */
+    public static final String AUTHORITIES = "authorities";
 }

@@ -1,6 +1,7 @@
 package com.spring.study.filter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
 import com.spring.study.common.JwtConstant;
 import com.spring.study.common.TimeUtils;
 import com.spring.study.entity.User;
@@ -12,7 +13,9 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import sun.security.util.SecurityConstants;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -61,15 +64,16 @@ public class JwtLoginFilter extends UsernamePasswordAuthenticationFilter {
      */
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
-        String token;
         try {
+            String username = ((UserDetails) authResult.getPrincipal()).getUsername();
             Collection<? extends GrantedAuthority> authorities = authResult.getAuthorities();
-            List roleList = new ArrayList<>();
+            List<String> roleList = new ArrayList<>();
             for (GrantedAuthority grantedAuthority : authorities) {
                 roleList.add(grantedAuthority.getAuthority());
             }
-            token = Jwts.builder()
-                    .setSubject(authResult.getName() + "-" + roleList)
+            String token = Jwts.builder()
+                    .setSubject(username)
+                    .claim(JwtConstant.AUTHORITIES, new Gson().toJson(roleList))
                     .setExpiration(new Date(TimeUtils.getCurr() + JwtConstant.JWT_TTL))
                     .signWith(SignatureAlgorithm.HS256, JwtConstant.JWT_SECRET)
                     .compact();

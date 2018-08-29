@@ -1,10 +1,8 @@
 package com.spring.study.security;
 
 import com.spring.study.config.IgnoredUrlsProperties;
-import com.spring.study.security.impl.CustomAuthenticationProvider;
 import com.spring.study.filter.JwtAuthenticationFilter;
 import com.spring.study.filter.JwtLoginFilter;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -20,10 +18,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
  * @data: Create on 2018/8/4.
  */
 @Configuration
-@EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-
 
     private UserDetailsService userDetailsService;
     private BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -42,7 +38,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
      */
     @Override
     public void configure(AuthenticationManagerBuilder managerBuilder) throws Exception {
-        managerBuilder.authenticationProvider(new CustomAuthenticationProvider(userDetailsService, bCryptPasswordEncoder));
+        managerBuilder.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder);
     }
 
     /**
@@ -50,7 +46,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
      */
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
-        System.out.println(ignoredUrlsProperties.getUrls().toString());
+
         httpSecurity
                 .cors().and() // 跨域支持
                 .csrf().disable()
