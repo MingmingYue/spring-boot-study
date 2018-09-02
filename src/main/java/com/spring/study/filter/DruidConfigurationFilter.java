@@ -17,6 +17,7 @@ import org.springframework.context.annotation.Configuration;
 public class DruidConfigurationFilter {
 
     @Bean
+    @SuppressWarnings({"unchecked"})
     public ServletRegistrationBean registrationBean() {
         ServletRegistrationBean bean = new ServletRegistrationBean(new StatViewServlet(), "/druid1/*");
         bean.addInitParameter("allow", "127.0.0.1");
@@ -31,6 +32,7 @@ public class DruidConfigurationFilter {
     }
 
     @Bean
+    @SuppressWarnings({"unchecked"})
     public FilterRegistrationBean druidStatFilter() {
         FilterRegistrationBean bean = new FilterRegistrationBean(new WebStatFilter());
         bean.addUrlPatterns("/*");

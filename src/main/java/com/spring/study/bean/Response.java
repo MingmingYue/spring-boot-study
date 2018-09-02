@@ -40,14 +40,17 @@ public class Response<T> {
         return new Response<>(code, "", data);
     }
 
+    @SuppressWarnings("unchecked")
     public static <T> Response<T> success() {
         return success(RequestStatus.REQUEST_OK, true);
     }
 
+    @SuppressWarnings("unchecked")
     public static <T> Response<T> success(T data) {
         return success(RequestStatus.REQUEST_OK, data);
     }
 
+    @SuppressWarnings("unchecked")
     public static <T> Response<T> failure(int code, String message) {
         return new Response(code, message, false);
     }
