@@ -11,11 +11,5 @@ import org.apache.ibatis.annotations.Param;
 @Mapper
 public interface UserMapper {
 
-    /**
-     * 查找用户
-     *
-     * @param username
-     * @return
-     */
     User getUserByName(@Param("username") String username);
 }

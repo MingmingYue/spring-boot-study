@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
  * @author: ZhouMingming
  * @data: Create on 2018/8/27.
  */
+@SuppressWarnings("AlibabaUndefineMagicConstant")
 @Slf4j
 public class SnowFlakeUtil {
 
@@ -97,12 +98,5 @@ public class SnowFlakeUtil {
      */
     private static long timeGen() {
         return System.currentTimeMillis();
-    }
-
-    public static void main(String[] args) {
-        for (int i = 0; i < 100; i++) {
-            SnowFlakeUtil snowFlakeUtil = SnowFlakeUtil.getFlowIdInstance();
-            System.out.println(snowFlakeUtil.nextId());
-        }
     }
 }
