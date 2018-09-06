@@ -2,7 +2,7 @@ package com.spring.study.security;
 
 import com.spring.study.config.IgnoredUrlsProperties;
 import com.spring.study.filter.JwtAuthenticationFilter;
-import com.spring.study.filter.JwtLoginFilter;
+import com.spring.study.security.handle.AuthenticationSuccessHandler;
 import com.spring.study.security.permission.MyFilterSecurityInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -10,6 +10,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.annotation.web.configurers.ExpressionUrlAuthorizationConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -27,16 +28,19 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private BCryptPasswordEncoder bCryptPasswordEncoder;
     private IgnoredUrlsProperties ignoredUrlsProperties;
     private MyFilterSecurityInterceptor myFilterSecurityInterceptor;
+    private AuthenticationSuccessHandler authenticationSuccessHandler;
 
     @Autowired
     public WebSecurityConfig(UserDetailsService userDetailsService,
                              IgnoredUrlsProperties ignoredUrlsProperties,
                              BCryptPasswordEncoder bCryptPasswordEncoder,
-                             MyFilterSecurityInterceptor myFilterSecurityInterceptor) {
+                             MyFilterSecurityInterceptor myFilterSecurityInterceptor,
+                             AuthenticationSuccessHandler authenticationSuccessHandler) {
         this.userDetailsService = userDetailsService;
         this.ignoredUrlsProperties = ignoredUrlsProperties;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
         this.myFilterSecurityInterceptor = myFilterSecurityInterceptor;
+        this.authenticationSuccessHandler = authenticationSuccessHandler;
     }
 
     /**
@@ -52,25 +56,34 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
      */
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
-
-        httpSecurity
+        ExpressionUrlAuthorizationConfigurer<HttpSecurity>.ExpressionInterceptUrlRegistry registry = httpSecurity.authorizeRequests();
+        ignoredUrlsProperties.getUrls().forEach(s -> registry.antMatchers(s).permitAll());
+        registry.anyRequest().authenticated()
+                .and()
+                .formLogin()
+                // .loginPage("/login") //  登录地址
+                .loginProcessingUrl("/user/login")// 登录成功后跳转的地址
+                .permitAll()
+                .successHandler(authenticationSuccessHandler)
+                .and()
                 .cors().and() // 跨域支持
-                .csrf().disable()
+                .csrf().disable() // //关闭跨站请求防护
                 // jwt 不需要session 所以不需要创建会话
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
-                .antMatchers(ignoredUrlsProperties.getUrls().toString()).permitAll()
                 .anyRequest().authenticated() // 所有请求需要身份验证
                 .and()
                 .addFilterBefore(myFilterSecurityInterceptor, FilterSecurityInterceptor.class)
-                .addFilter(new JwtLoginFilter(authenticationManager()))
                 .addFilter(new JwtAuthenticationFilter(authenticationManager()))
                 .logout()
-                .logoutUrl("/user/logout")
-                .logoutSuccessUrl("/user/login")
                 .permitAll() // 设置注销成功后的跳转到登录页面
                 .disable()
                 .headers().cacheControl(); // 禁用页面缓存
+    }
+
+    public static void main(String[] args) {
+        String newEncryptPass = new BCryptPasswordEncoder().encode("root");
+        System.out.println(newEncryptPass);
     }
 }

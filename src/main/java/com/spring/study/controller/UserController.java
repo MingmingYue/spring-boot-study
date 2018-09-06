@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
@@ -36,7 +37,13 @@ public class UserController {
     @GetMapping(value = "/getUser", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public Response<User> getUser() {
         Optional<Authentication> authentication = Optional.of(SecurityContextHolder.getContext().getAuthentication());
-        User user = userService.getUserByName((String) authentication.get().getDetails());
+        User user = userService.getUserByName(((UserDetails) authentication.get().getPrincipal()).getUsername());
         return Response.success(HttpStatus.OK.value(), HttpStatus.OK.getReasonPhrase(), user);
+    }
+
+    @RequestMapping(value = "/needLogin", method = RequestMethod.GET)
+    @ApiOperation(value = "没有登录")
+    public Response<String> needLogin() {
+        return Response.failure(401, "您还未登录");
     }
 }

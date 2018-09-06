@@ -30,7 +30,7 @@ public class SwaggerConfig {
     /**
      * 默认token 方便调试
      */
-    private static final String DEFAULT_TOKEN = "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxNTg5MjE5NzM5Ny1bUk9MRV9BRE1JTiwgQVVUSF9XUklURV0iLCJleHAiOjE1MzQyNzIyOTB9.h1csdIF_OPFANIWr-0GLhB0qBp3k1Vl6ha67gaKGoeg";
+    private static final String DEFAULT_TOKEN = "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJyb290IiwiYXV0aG9yaXRpZXMiOiJbXCLns7vnu5_nrqHnkIZcIixcIueUqOaIt-euoeeQhlwiXSIsImV4cCI6MTUzNjk2NTYwOX0.UxWz7h9QELasSyt5NyKtdiFHG6kOIN0ghaPiB8uYtogvYbyRk-WxKnINpSdZ0aE7dB12sWD5TKqv-1HT6UYFJw";
 
     @Bean
     public Docket videoMarketApi() {
