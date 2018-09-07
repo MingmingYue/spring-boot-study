@@ -81,9 +81,4 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .disable()
                 .headers().cacheControl(); // 禁用页面缓存
     }
-
-    public static void main(String[] args) {
-        String newEncryptPass = new BCryptPasswordEncoder().encode("root");
-        System.out.println(newEncryptPass);
-    }
 }
