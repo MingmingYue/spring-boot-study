@@ -1,14 +1,19 @@
 package com.spring.study.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.spring.study.util.SnowFlakeUtil;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.persistence.EntityListeners;
 import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -16,7 +21,12 @@ import java.util.Date;
  * @data: Create on 2018/8/27.
  */
 @Data
-public abstract class BaseEntity {
+@MappedSuperclass
+@EntityListeners(AuditingEntityListener.class)
+@JsonIgnoreProperties(value = {"hibernateLazyInitializer", "handler", "fieldHandler"})
+public abstract class BaseEntity implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     @Id
     @ApiModelProperty(value = "唯一标识")

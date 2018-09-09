@@ -1,19 +1,17 @@
-package com.spring.study.mapper;
+package com.spring.study.service;
 
-import com.baomidou.mybatisplus.mapper.BaseMapper;
+import com.baomidou.mybatisplus.service.IService;
 import com.spring.study.entity.Role;
 import com.spring.study.entity.UserRole;
 import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
 
 /**
  * @author: ZhouMingming
- * @data: Create on 2018/9/3.
+ * @data: Create on 2018/9/9.
  */
-@Mapper
-public interface UserRoleMapper extends BaseMapper<UserRole> {
+public interface IUserRoleService extends IService<UserRole> {
 
     List<Role> findByUserId(@Param("userId") String userId);
 }

@@ -25,7 +25,6 @@ import org.springframework.security.web.access.intercept.FilterSecurityIntercept
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private UserDetailsService userDetailsService;
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
     private IgnoredUrlsProperties ignoredUrlsProperties;
     private MyFilterSecurityInterceptor myFilterSecurityInterceptor;
     private AuthenticationSuccessHandler authenticationSuccessHandler;
@@ -33,12 +32,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     public WebSecurityConfig(UserDetailsService userDetailsService,
                              IgnoredUrlsProperties ignoredUrlsProperties,
-                             BCryptPasswordEncoder bCryptPasswordEncoder,
                              MyFilterSecurityInterceptor myFilterSecurityInterceptor,
                              AuthenticationSuccessHandler authenticationSuccessHandler) {
         this.userDetailsService = userDetailsService;
         this.ignoredUrlsProperties = ignoredUrlsProperties;
-        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
         this.myFilterSecurityInterceptor = myFilterSecurityInterceptor;
         this.authenticationSuccessHandler = authenticationSuccessHandler;
     }
@@ -48,7 +45,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
      */
     @Override
     public void configure(AuthenticationManagerBuilder managerBuilder) throws Exception {
-        managerBuilder.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder);
+        managerBuilder.userDetailsService(userDetailsService).passwordEncoder(new BCryptPasswordEncoder());
     }
 
     /**

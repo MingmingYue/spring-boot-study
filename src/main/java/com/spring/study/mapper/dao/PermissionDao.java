@@ -1,4 +1,4 @@
-package com.spring.study.service;
+package com.spring.study.mapper.dao;
 
 import com.spring.study.entity.Permission;
 
@@ -6,9 +6,9 @@ import java.util.List;
 
 /**
  * @author: ZhouMingming
- * @data: Create on 2018/9/4.
+ * @data: Create on 2018/9/9.
  */
-public interface PermissionService extends BaseService<Permission, String> {
+public interface PermissionDao extends BaseDao<Permission, String> {
 
     /**
      * 通过层级查找

@@ -1,6 +1,7 @@
 package com.spring.study.entity;
 
 import com.baomidou.mybatisplus.annotations.TableField;
+import com.baomidou.mybatisplus.annotations.TableName;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -8,6 +9,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import javax.persistence.Transient;
 import java.math.BigDecimal;
 import java.util.List;
@@ -17,10 +20,12 @@ import java.util.List;
  * @data: Create on 2018/8/27.
  */
 @Data
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
+@Entity
+@Table(name = "t_permission")
+@TableName("t_permission")
 public class Permission extends BaseEntity {
+
+    private static final long serialVersionUID = 1L;
 
     @ApiModelProperty(value = "菜单/权限名称")
     private String name;
@@ -61,10 +66,12 @@ public class Permission extends BaseEntity {
     private Integer status = 0;
 
     @Transient
+    @TableField(exist = false)
     @ApiModelProperty(value = "子菜单/权限")
     private List<Permission> children;
 
     @Transient
+    @TableField(exist = false)
     @ApiModelProperty(value = "页面拥有的权限类型")
     private List<String> permTypes;
 
@@ -74,10 +81,12 @@ public class Permission extends BaseEntity {
     private Boolean expand = true;
 
     @Transient
+    @TableField(exist = false)
     @ApiModelProperty(value = "是否勾选 前端所需")
     private Boolean checked = false;
 
     @Transient
+    @TableField(exist = false)
     @ApiModelProperty(value = "是否选中 前端所需")
     private Boolean selected = false;
 }

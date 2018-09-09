@@ -4,6 +4,7 @@ import cn.hutool.core.util.StrUtil;
 import com.spring.study.entity.Permission;
 import com.spring.study.service.PermissionService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.access.SecurityConfig;
 import org.springframework.security.web.FilterInvocation;

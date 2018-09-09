@@ -1,5 +1,7 @@
 package com.spring.study.entity;
 
+import com.baomidou.mybatisplus.annotations.TableField;
+import com.baomidou.mybatisplus.annotations.TableName;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -8,6 +10,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Table;
 import javax.persistence.Transient;
 import java.util.List;
 
@@ -16,11 +19,15 @@ import java.util.List;
  * @data: Create on 2018/7/27.
  */
 @Data
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
+@Entity
+@Table(name = "t_user")
+@TableName("t_user")
 public class User extends BaseEntity {
 
+    private static final long serialVersionUID = 1L;
+
+    @ApiModelProperty(value = "用户名")
+    @Column(unique = true, nullable = false)
     private String username;
 
     @ApiModelProperty(value = "密码")
@@ -56,10 +63,12 @@ public class User extends BaseEntity {
     private String description;
 
     @Transient
+    @TableField(exist = false)
     @ApiModelProperty(value = "用户拥有角色")
     private List<Role> roles;
 
     @Transient
+    @TableField(exist = false)
     @ApiModelProperty(value = "用户拥有的权限")
     private List<Permission> permissions;
 }

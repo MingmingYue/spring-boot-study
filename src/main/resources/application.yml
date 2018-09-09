@@ -34,9 +34,9 @@ mybatis-plus:
     map-underscore-to-camel-case: true
     useGeneratedKeys: true
     cache-enabled: false
-    logImpl: org.apache.ibatis.logging.stdout.StdOutImpl
   mapper-locations: classpath:mapper/*.xml
   typeAliasesPackage: com.spring.study.entity
+  typeEnumsPackage: com.spring.study.entity
   typeHandlersPackage: com.spring.study.typeHandler
 
 data-cache:
@@ -47,13 +47,13 @@ data-cache:
 
 ignored:
   urls:
-    - /user/register
-    - /login
-    - /v2/api-docs
-    - /swagger-resources
-    - /swagger-resources/**
-    - /configuration/ui
-    - /configuration/security
-    - /swagger-ui.html
-    - /webjars/**
-    - /druid1/**
+  - /user/register
+  - /login
+  - /v2/api-docs
+  - /swagger-resources
+  - /swagger-resources/**
+  - /configuration/ui
+  - /configuration/security
+  - /swagger-ui.html
+  - /webjars/**
+  - /druid1/**
