@@ -1,6 +1,7 @@
 package com.spring.study.mapper;
 
 import com.spring.study.entity.User;
+import com.spring.study.mapper.dao.BaseDao;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -9,7 +10,7 @@ import org.apache.ibatis.annotations.Param;
  * @data: Create on 2018/7/27.
  */
 @Mapper
-public interface UserMapper {
+public interface UserMapper extends BaseDao<User, String> {
 
     User getUserByName(@Param("username") String username);
 }

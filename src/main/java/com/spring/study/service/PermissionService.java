@@ -8,7 +8,6 @@ import java.util.List;
  * @author: ZhouMingming
  * @data: Create on 2018/9/4.
  */
-public interface PermissionService {
+public interface PermissionService extends BaseService<Permission, String> {
 
-    List<Permission> getAll();
 }

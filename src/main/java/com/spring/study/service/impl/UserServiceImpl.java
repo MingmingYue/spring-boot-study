@@ -29,10 +29,17 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public UserMapper  getRepository() {
+        return userMapper;
+    }
+
+    @Override
     public User getUserByName(String username) {
         User user = userMapper.getUserByName(username);
         user.setRoles(userRoleMapper.findByUserId(user.getId()));
         user.setPermissions(permissionMapper.findByUserId(user.getId()));
         return user;
     }
+
+
 }
