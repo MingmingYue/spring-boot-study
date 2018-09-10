@@ -23,6 +23,12 @@ spring:
       test-while-idle: true
       pool-prepared-statements: true
       max-pool-prepared-statement-per-connection-size: 20
+  jpa:
+    show-sql: true
+    # 自动生成表结构
+    generate-ddl: true
+    hibernate:
+      ddl-auto: none
   redis:
     host: 127.0.0.1
     password:

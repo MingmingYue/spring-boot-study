@@ -5,6 +5,7 @@ import com.spring.study.mapper.dao.PermissionDao;
 import com.spring.study.service.PermissionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -13,6 +14,7 @@ import java.util.List;
  * @author: ZhouMingming
  * @data: Create on 2018/9/4.
  */
+@Transactional
 @Service("PermissionService")
 public class PermissionServiceImpl implements PermissionService {
 

@@ -13,6 +13,8 @@ import java.util.List;
 public interface UserDao extends BaseDao<User, String> {
 
 
+    User getUserByUsername(String username);
+
     /**
      * 通过用户名和状态获取用户
      * @param username

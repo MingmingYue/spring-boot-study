@@ -5,13 +5,16 @@ import com.spring.study.mapper.dao.RolePermissionDao;
 import com.spring.study.service.RolePermissionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 /**
+ *
  * @author: ZhouMingming
  * @data: Create on 2018/9/8.
  */
+@Transactional
 @Service("RolePermissionService")
 public class RolePermissionServiceImpl implements RolePermissionService {
 

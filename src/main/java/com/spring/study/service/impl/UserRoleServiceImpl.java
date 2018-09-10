@@ -5,6 +5,7 @@ import com.spring.study.mapper.dao.UserRoleDao;
 import com.spring.study.service.UserRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -12,6 +13,7 @@ import java.util.List;
  * @author: ZhouMingming
  * @data: Create on 2018/9/9.
  */
+@Transactional
 @Service("UserRoleService")
 public class UserRoleServiceImpl implements UserRoleService {
 
