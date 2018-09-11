@@ -41,7 +41,7 @@ public class UserController {
         return Response.success(HttpStatus.OK.value(), HttpStatus.OK.getReasonPhrase(), user);
     }
 
-    @RequestMapping(value = "/needLogin", method = RequestMethod.GET)
+    @GetMapping(value = "/needLogin")
     @ApiOperation(value = "没有登录")
     public Response<String> needLogin() {
         return Response.failure(401, "您还未登录");
