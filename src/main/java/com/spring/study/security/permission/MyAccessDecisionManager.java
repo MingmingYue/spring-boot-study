@@ -5,6 +5,7 @@ import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.authentication.InsufficientAuthenticationException;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Component;
 
 import java.util.Collection;
@@ -12,6 +13,7 @@ import java.util.Iterator;
 
 /**
  * 权限管理决断器
+ * 当资源需要的角色为空时不进决策管理器(AccessDecisionManager)或不进投票器
  *
  * @author: ZhouMingming
  * @data: Create on 2018/8/30.
@@ -28,11 +30,11 @@ public class MyAccessDecisionManager implements AccessDecisionManager {
         while (iterable.hasNext()) {
             ConfigAttribute c = iterable.next();
             String needRole = c.getAttribute();
-            authentication.getAuthorities().stream().forEach(o -> {
-                if (needRole.trim().equals(o.getAuthority())) {
+            for (GrantedAuthority ga : authentication.getAuthorities()) {
+                if (needRole.trim().equals(ga.getAuthority())) {
                     return;
                 }
-            });
+            }
         }
         throw new AccessDeniedException("没有访问权限");
     }

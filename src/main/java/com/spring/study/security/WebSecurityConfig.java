@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.configurers.ExpressionUrlAuthorizationConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -21,6 +22,7 @@ import org.springframework.security.web.access.intercept.FilterSecurityIntercept
  * @data: Create on 2018/8/4.
  */
 @Configuration
+@EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
@@ -63,19 +65,22 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll()
                 .successHandler(authenticationSuccessHandler)
                 .and()
-                .cors().and() // 跨域支持
-                .csrf().disable() // //关闭跨站请求防护
-                // jwt 不需要session 所以不需要创建会话
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .logout()
+                .permitAll()
                 .and()
                 .authorizeRequests()
-                .anyRequest().authenticated() // 所有请求需要身份验证
+                //任何请求
+                .anyRequest()
+                //需要身份认证
+                .authenticated()
+                .and()
+                //关闭跨站请求防护
+                .csrf().disable()
+                //前后端分离采用JWT 不需要session
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .addFilterBefore(myFilterSecurityInterceptor, FilterSecurityInterceptor.class)
                 .addFilter(new JwtAuthenticationFilter(authenticationManager()))
-                .logout()
-                .permitAll() // 设置注销成功后的跳转到登录页面
-                .disable()
                 .headers().cacheControl(); // 禁用页面缓存
     }
 }

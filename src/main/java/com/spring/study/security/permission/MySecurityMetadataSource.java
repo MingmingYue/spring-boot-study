@@ -35,7 +35,7 @@ public class MySecurityMetadataSource implements FilterInvocationSecurityMetadat
      * 加载权限列表中的所有权限
      */
     public void loadResourceDefine() {
-        map = new HashMap<>(16);
+        map = new HashMap<>(32);
         Collection<ConfigAttribute> configAttributes;
         ConfigAttribute cfg;
         List<Permission> permissions = permissionService.getAll();

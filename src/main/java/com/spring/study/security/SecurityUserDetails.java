@@ -1,7 +1,9 @@
 package com.spring.study.security;
 
+import cn.hutool.core.util.StrUtil;
 import com.spring.study.common.CommonConstant;
 import com.spring.study.entity.Permission;
+import com.spring.study.entity.Role;
 import com.spring.study.entity.User;
 import lombok.extern.slf4j.Slf4j;
 import cn.hutool.core.collection.CollUtil;
@@ -35,7 +37,20 @@ public class SecurityUserDetails extends User implements UserDetails {
         List<GrantedAuthority> authorityList = new ArrayList<>();
         List<Permission> permissions = this.getPermissions();
         if (CollUtil.isNotEmpty(permissions) && permissions.get(0) != null) {
-            permissions.stream().forEach(permission -> authorityList.add(new SimpleGrantedAuthority(permission.getTitle())));
+            permissions.stream().forEach(permission -> {
+                if (StrUtil.isNotBlank(permission.getTitle())
+                        && StrUtil.isNotBlank(permission.getPath())) {
+                    authorityList.add(new SimpleGrantedAuthority(permission.getTitle()));
+                }
+            });
+        }
+        List<Role> roles = this.getRoles();
+        if (roles != null && roles.size() > 0) {
+            roles.forEach(item -> {
+                if (StrUtil.isNotBlank(item.getName())) {
+                    authorityList.add(new SimpleGrantedAuthority(item.getName()));
+                }
+            });
         }
         return authorityList;
     }
