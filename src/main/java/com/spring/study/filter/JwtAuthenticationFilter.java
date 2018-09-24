@@ -6,7 +6,8 @@ import com.google.gson.reflect.TypeToken;
 import com.spring.study.common.JwtConstant;
 import com.spring.study.exception.TokenException;
 import io.jsonwebtoken.*;
-import lombok.extern.slf4j.Slf4j;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
@@ -27,8 +28,9 @@ import java.util.List;
  * @author: ZhouMingming
  * @data: Create on 2018/8/3.
  */
-@Slf4j
 public class JwtAuthenticationFilter extends BasicAuthenticationFilter {
+
+    private static final Logger log = LogManager.getLogger(JwtAuthenticationFilter.class);
 
     public JwtAuthenticationFilter(AuthenticationManager authenticationManager) {
         super(authenticationManager);

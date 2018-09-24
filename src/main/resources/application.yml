@@ -34,6 +34,13 @@ spring:
     password:
     database: 0
     port: 6379
+    jedis:
+      pool:
+        max-active: 8
+        max-wait: -1s
+        max-idle: 8
+        min-idle: 0
+    timeout: 10000s
 
 mybatis-plus:
   configuration:

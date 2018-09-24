@@ -7,7 +7,8 @@ import com.spring.study.service.PermissionService;
 import com.spring.study.service.RolePermissionService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import lombok.extern.slf4j.Slf4j;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -20,11 +21,12 @@ import org.springframework.web.bind.annotation.RestController;
  * @author: ZhouMingming
  * @data: Create on 2018/9/11.
  */
-@Slf4j
 @RestController
 @Api(tags = "1.1", description = "角色管理", value = "角色管理")
 @RequestMapping(value = "/permission")
 public class PermissionController {
+
+    private static final Logger log = LogManager.getLogger(UserController.class);
 
     private final PermissionService permissionService;
     private final RolePermissionService rolePermissionService;

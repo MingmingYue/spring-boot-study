@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration status="error">
+    <!--先定义所有的appender-->
+    <appenders>
+        <!--这个输出控制台的配置-->
+        <Console name="Console" target="SYSTEM_OUT">
+            <!--控制台只输出level及以上级别的信息（onMatch），其他的直接拒绝（onMismatch）-->
+            <ThresholdFilter level="trace" onMatch="ACCEPT" onMismatch="DENY"/>
+            <!--这个都知道是输出日志的格式-->
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%p] %msg%xEx%n"/>
+        </Console>
+        <!--文件会打印出所有信息，这个log每次运行程序会自动清空，由append属性决定，这个也挺有用的，适合临时测试用-->
+        <!--<File name="log" fileName="ldemotesttest.log" append="true">-->
+        <!--<PatternLayout pattern="%d{HH:mm:ss.SSS} %-5level %class{36} %L %M - %msg%xEx%n"/>-->
+        <!--</File>-->
+
+        <!--这个会打印出所有的信息，每次大小超过size，则这size大小的日志会自动存入按年份-月-天份建立的文件夹下面并进行压缩，作为存档-->
+        <RollingFile name="RollingFile" fileName="logs/server.log"
+                     filePattern="logs/log/server-%d{MM-dd-yyyy}.log">
+            <!--建立日期文件夹在放到里面-->
+            <!--log/$${date:yyyy-MM-dd}/server-%d{MM-dd-yyyy}.log-->
+            <!--打印详细信息-->
+            <!--<PatternLayout pattern="%d{yyyy-MM-dd 'at' HH:mm:ss z} %-5level %class{36} %L %M - %msg%xEx%n"/>-->
+            <PatternLayout pattern="%d{yyyy-MM-dd 'at' HH:mm:ss.SSS z} [%p] %msg%xEx%n"/>
+            <Policies>
+                <!-- TimeBasedTriggeringPolicy需要和filePattern配套使用，由于filePattern配置的时间最小粒度是dd天，所以表示每一天新建一个文件保存日志-->
+                <TimeBasedTriggeringPolicy modulate="true" interval="1"/>
+                <!--设置每一个日志文件.log的大小-->
+                <!--<SizeBasedTriggeringPolicy size="500M"/>-->
+            </Policies>
+            <!-- DefaultRolloverStrategy属性如不设置，则默认为最多同一文件夹下7个文件，这里设置了10 -->
+            <!--<DefaultRolloverStrategy max="10"/>-->
+            <!--删除前一段时间的日志-->
+            <DefaultRolloverStrategy>
+                <Delete basePath="logs/log" maxDepth="1">
+                    <IfFileName glob="server-*.log"/>
+                    <IfLastModified age="6d"/>
+                </Delete>
+            </DefaultRolloverStrategy>
+        </RollingFile>
+    </appenders>
+    <!--然后定义logger，只有定义了logger并引入的appender，appender才会生效-->
+    <loggers>
+        <!--建立一个默认的root的logger-->
+        <root level="INFO">
+            <appender-ref ref="RollingFile"/>
+            <appender-ref ref="Console"/>
+        </root>
+
+        <!-- 多虑掉第三方日志系统debug的日志-->
+        <!--<logger name="org.springframework.core" level="info"/>-->
+        <!--<logger name="org.springframework.beans" level="info"/>-->
+        <!--<logger name="org.springframework.context" level="info"/>-->
+        <!--<logger name="org.springframework.web" level="info"/>-->
+
+    </loggers>
+</configuration>

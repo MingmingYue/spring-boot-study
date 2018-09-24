@@ -5,8 +5,9 @@ import com.spring.study.common.CommonConstant;
 import com.spring.study.entity.Permission;
 import com.spring.study.entity.Role;
 import com.spring.study.entity.User;
-import lombok.extern.slf4j.Slf4j;
 import cn.hutool.core.collection.CollUtil;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -19,8 +20,10 @@ import java.util.List;
  * @author: ZhouMingming
  * @data: Create on 2018/8/28.
  */
-@Slf4j
 public class SecurityUserDetails extends User implements UserDetails {
+
+    private static final Logger log = LogManager.getLogger(SecurityUserDetails.class);
+
 
     public SecurityUserDetails(User user) {
         if (user != null) {

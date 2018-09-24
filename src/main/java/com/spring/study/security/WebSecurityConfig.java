@@ -1,6 +1,6 @@
 package com.spring.study.security;
 
-import com.spring.study.config.IgnoredUrlsProperties;
+import com.spring.study.config.IgnoredUrlsConfig;
 import com.spring.study.filter.JwtAuthenticationFilter;
 import com.spring.study.security.handle.AuthenticationSuccessHandler;
 import com.spring.study.security.permission.MyFilterSecurityInterceptor;
@@ -27,13 +27,13 @@ import org.springframework.security.web.access.intercept.FilterSecurityIntercept
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private UserDetailsService userDetailsService;
-    private IgnoredUrlsProperties ignoredUrlsProperties;
+    private IgnoredUrlsConfig ignoredUrlsProperties;
     private MyFilterSecurityInterceptor myFilterSecurityInterceptor;
     private AuthenticationSuccessHandler authenticationSuccessHandler;
 
     @Autowired
     public WebSecurityConfig(UserDetailsService userDetailsService,
-                             IgnoredUrlsProperties ignoredUrlsProperties,
+                             IgnoredUrlsConfig ignoredUrlsProperties,
                              MyFilterSecurityInterceptor myFilterSecurityInterceptor,
                              AuthenticationSuccessHandler authenticationSuccessHandler) {
         this.userDetailsService = userDetailsService;

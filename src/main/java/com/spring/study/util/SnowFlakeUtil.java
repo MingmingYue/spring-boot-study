@@ -1,14 +1,16 @@
 package com.spring.study.util;
 
-import lombok.extern.slf4j.Slf4j;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * @author: ZhouMingming
  * @data: Create on 2018/8/27.
  */
 @SuppressWarnings("AlibabaUndefineMagicConstant")
-@Slf4j
 public class SnowFlakeUtil {
+
+    private static final Logger log = LogManager.getLogger(SnowFlakeUtil.class);
 
     private final long id;
     /**
