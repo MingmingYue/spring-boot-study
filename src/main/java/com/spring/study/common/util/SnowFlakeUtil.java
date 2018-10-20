@@ -1,4 +1,4 @@
-package com.spring.study.util;
+package com.spring.study.common.util;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

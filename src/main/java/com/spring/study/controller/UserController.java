@@ -53,7 +53,6 @@ public class UserController {
     public Response<User> getUser() {
         Optional<Authentication> authentication = Optional.of(SecurityContextHolder.getContext().getAuthentication());
         User user = userService.getUserByName(((UserDetails) authentication.get().getPrincipal()).getUsername());
-        log.info(user.toString());
         return Response.success(HttpStatus.OK.value(), HttpStatus.OK.getReasonPhrase(), user);
     }
 

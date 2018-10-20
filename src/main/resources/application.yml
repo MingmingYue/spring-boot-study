@@ -29,6 +29,7 @@ spring:
     generate-ddl: true
     hibernate:
       ddl-auto: none
+  # Redis
   redis:
     host: 127.0.0.1
     password:
@@ -41,6 +42,11 @@ spring:
         max-idle: 8
         min-idle: 0
     timeout: 10000s
+  # Elasticsearch
+  data:
+    elasticsearch:
+      cluster-nodes: 127.0.0.1:9300
+      client-transport-sniff: false
 
 mybatis-plus:
   configuration:
