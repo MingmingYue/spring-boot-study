@@ -85,7 +85,7 @@ public class SystemLogAspect {
             if (StrUtil.isNotBlank(username)) {
 
                 // 日志记录方式 true使用Elasticsearch记录 false记录至数据库中
-                if (false) {
+                if (true) {
                     EsLog esLog = new EsLog();
 
                     //日志标题

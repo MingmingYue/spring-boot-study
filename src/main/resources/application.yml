@@ -42,11 +42,13 @@ spring:
         max-idle: 8
         min-idle: 0
     timeout: 10000s
-  # Elasticsearch
+  # Elasticsearch   cluster-name 和配置文件中的名字一样 或者会报 None of the configured nodes are available
   data:
     elasticsearch:
       cluster-nodes: 127.0.0.1:9300
-      client-transport-sniff: false
+      cluster-name: elasticsearch_ming
+      repositories:
+        enabled: true
 
 mybatis-plus:
   configuration:

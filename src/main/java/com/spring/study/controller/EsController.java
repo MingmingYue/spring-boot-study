@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Transactional
 public class EsController {
 
-    private String ES_NODE_CLIENT = "127.0.0.1:9300";
+    private String ES_NODE_CLIENT = "127.0.0.1:9200";
 
     @RequestMapping(value = "/info", method = RequestMethod.GET)
     @ApiOperation(value = "获取es状态")
