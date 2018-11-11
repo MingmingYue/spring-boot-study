@@ -2,6 +2,7 @@ package com.spring.study.controller;
 
 import com.spring.study.bean.Response;
 import com.spring.study.common.CommonConstant;
+import com.spring.study.common.annotation.SystemLog;
 import com.spring.study.entity.Role;
 import com.spring.study.entity.User;
 import com.spring.study.entity.UserRole;
@@ -50,10 +51,10 @@ public class UserController {
     @ApiOperation(value = "获取用户", notes = "通过token获取用户", httpMethod = "GET")
     @ApiResponse(code = 200, message = "OK")
     @GetMapping(value = "/getUser", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @SystemLog(description="获取用户")
     public Response<User> getUser() {
         Optional<Authentication> authentication = Optional.of(SecurityContextHolder.getContext().getAuthentication());
         User user = userService.getUserByName(((UserDetails) authentication.get().getPrincipal()).getUsername());
-        log.info(user.toString());
         return Response.success(HttpStatus.OK.value(), HttpStatus.OK.getReasonPhrase(), user);
     }
 

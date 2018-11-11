@@ -2,7 +2,7 @@ package com.spring.study.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.spring.study.util.SnowFlakeUtil;
+import com.spring.study.common.util.SnowFlakeUtil;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import org.springframework.data.annotation.CreatedDate;
