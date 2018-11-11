@@ -5,6 +5,7 @@ import com.alibaba.druid.support.http.WebStatFilter;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 
 /**
@@ -16,16 +17,25 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class DruidConfigurationFilter {
 
+    @Value("spring-boot.druid.allow")
+    private String ALLOW_PARAMETER;
+    @Value("spring-boot.druid.deny")
+    private String DENY_PARAMETER;
+    @Value("spring-boot.druid.login-username")
+    private String LOGIN_USERNAME;
+    @Value("spring-boot.druid.login-password")
+    private String LOGIN_PASSWORD;
+
     @Bean
     @SuppressWarnings({"unchecked"})
     public ServletRegistrationBean registrationBean() {
         ServletRegistrationBean bean = new ServletRegistrationBean(new StatViewServlet(), "/druid1/*");
-        bean.addInitParameter("allow", "127.0.0.1");
+        bean.addInitParameter("allow", ALLOW_PARAMETER);
         //IP黑名单 (存在共同时，deny优先于allow)
-        bean.addInitParameter("deny", "192.168.1.73");
+        bean.addInitParameter("deny", DENY_PARAMETER);
         //登录查看信息的账号密码.
-        bean.addInitParameter("loginUsername", "root");
-        bean.addInitParameter("loginPassword", "root");
+        bean.addInitParameter("loginUsername", LOGIN_USERNAME);
+        bean.addInitParameter("loginPassword", LOGIN_PASSWORD);
         //是否能够重置数据.
         bean.addInitParameter("resetEnable", "false");
         return bean;

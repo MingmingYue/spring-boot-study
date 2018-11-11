@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @data: Create on 2018/10/20.
  */
 @RestController
-@Api(description = "Elasticsearch信息接口")
+@Api(tags = "1.1", description = "Elasticsearch信息接口", value = "Elasticsearch信息接口")
 @RequestMapping("/es")
 @Transactional
 public class EsController {

@@ -71,6 +71,11 @@ spring-boot:
     nodeClient: 127.0.0.1:9200
     logRecord:
       es: true
+  druid:
+    allow: 127.0.0.1
+    deny: 192.168.1.101
+    login-username: root
+    login-passwrod: root
 
 ignored:
   urls:

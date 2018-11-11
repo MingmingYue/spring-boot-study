@@ -2,10 +2,12 @@ package com.spring.study.controller;
 
 import com.spring.study.bean.Response;
 import com.spring.study.common.CommonConstant;
+import com.spring.study.common.annotation.RateLimiter;
 import com.spring.study.common.annotation.SystemLog;
 import com.spring.study.entity.Role;
 import com.spring.study.entity.User;
 import com.spring.study.entity.UserRole;
+import com.spring.study.enums.ErrorType;
 import com.spring.study.service.IUserRoleService;
 import com.spring.study.service.RoleService;
 import com.spring.study.service.UserService;
@@ -48,10 +50,11 @@ public class UserController {
         this.iUserRoleService = iUserRoleService;
     }
 
-    @ApiOperation(value = "获取用户", notes = "通过token获取用户", httpMethod = "GET")
-    @ApiResponse(code = 200, message = "OK")
     @GetMapping(value = "/getUser", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    @SystemLog(description="获取用户")
+    @ApiOperation(value = "获取用户", notes = "通过token获取用户", httpMethod = "GET")
+    @RateLimiter(key = "getUser", period = 100, count = 2)
+    @ApiResponse(code = 200, message = "OK")
+    @SystemLog(description = "获取用户")
     public Response<User> getUser() {
         Optional<Authentication> authentication = Optional.of(SecurityContextHolder.getContext().getAuthentication());
         User user = userService.getUserByName(((UserDetails) authentication.get().getPrincipal()).getUsername());
@@ -67,7 +70,7 @@ public class UserController {
         u.setType(CommonConstant.USER_TYPE_NORMAL);
         User user = userService.save(u);
         if (user == null) {
-            return Response.failure(402, "注册失败");
+            return Response.failure(ErrorType.REGISTER_ERROR.value(), ErrorType.REGISTER_ERROR.reasonPhrase());
         }
         // 默认角色
         List<Role> roleList = roleService.findByDefaultRole(true);
@@ -79,12 +82,12 @@ public class UserController {
                 iUserRoleService.insert(ur);
             }
         }
-        return Response.success(200, "注册成功", user);
+        return Response.success(HttpStatus.OK.value(), HttpStatus.OK.getReasonPhrase(), user);
     }
 
     @GetMapping(value = "/needLogin")
     @ApiOperation(value = "没有登录")
     public Response<String> needLogin() {
-        return Response.failure(401, "您还未登录");
+        return Response.failure(ErrorType.NOT_LOGIN_IN.value(), ErrorType.NOT_LOGIN_IN.reasonPhrase());
     }
 }
