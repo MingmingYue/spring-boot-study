@@ -17,6 +17,7 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.NamedThreadLocal;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -39,12 +40,14 @@ public class SystemLogAspect {
 
     private static final Logger log = LogManager.getLogger(SystemLogAspect.class);
 
+    @Value("${spring-boot.elasticsearch.logRecord.es}")
+    private static boolean IS_ES;
     private static final ThreadLocal<Date> beginTimeThreadLocal = new NamedThreadLocal<Date>("ThreadLocal beginTime");
 
-    private  IpInfoUtil ipInfoUtil;
-    private  LogService logService;
-    private  EsLogService esLogService;
-    private  HttpServletRequest httpServletRequest;
+    private IpInfoUtil ipInfoUtil;
+    private LogService logService;
+    private EsLogService esLogService;
+    private HttpServletRequest httpServletRequest;
 
     public SystemLogAspect(@Autowired IpInfoUtil ipInfoUtil,
                            @Autowired LogService logService,
@@ -85,7 +88,7 @@ public class SystemLogAspect {
             if (StrUtil.isNotBlank(username)) {
 
                 // 日志记录方式 true使用Elasticsearch记录 false记录至数据库中
-                if (true) {
+                if (IS_ES) {
                     EsLog esLog = new EsLog();
 
                     //日志标题

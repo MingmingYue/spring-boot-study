@@ -66,6 +66,12 @@ data-cache:
       expireAfterWrite: 30
       maximumSize: 100
 
+spring-boot:
+  elasticsearch:
+    nodeClient: 127.0.0.1:9200
+    logRecord:
+      es: true
+
 ignored:
   urls:
   - /user/register
